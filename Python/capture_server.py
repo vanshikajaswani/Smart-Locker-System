@@ -1,18 +1,21 @@
+import os
 from flask import Flask, request
 import requests
-
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
 
 # 🔴 REPLACE THESE 3 VALUES
-BOT_TOKEN = "8731055636:AAGoRnLZmzppr0u4GQ1sxuIWwPHeMLUusKA"
-CHAT_ID = "5258488910"
-ESP32_IP = "http://10.65.167.215" 
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
+ESP32_IP = os.getenv("ESP32_IP")
+CAMERA_IP = os.getenv("CAMERA_IP")
 
 # 📸 CAPTURE (photo trigger)
 @app.route("/capture")
 def capture():
     try:
-        cam_url = "http://10.65.167.25//capture"
+        cam_url = f"{CAMERA_IP}/capture"
         
         print("Requesting image from camera...")
         response = requests.get(cam_url)
